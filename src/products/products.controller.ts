@@ -1,14 +1,30 @@
-import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 
 @Controller('products')
 export class ProductsController {
     @Get()
-    find() {
-        return "Hola Mundo!!"
+    findProducts():string{
+        return "Total de productos en el aula 2ASIR"
     }
-    @Get('holamundo')
-    getHelloInProducts(): string {
-        return "Estamos en productos!!!";
+    @Get('camiseta')
+    findDetalle():string{
+        return "Total de camisetas!!"; 
+    }
+    @Get('camiseta/roja')
+    findAdios():string{
+        return "Total de camisetas rojas!!"; 
+    }    
+    @Get('hot')
+    findHot(){
+        return "Productos calientes!"
+    }
+    @Get(':id')
+    findByid(@Param() parametros:any):string{
+        return `Obteniendo productos del parámetro ${parametros.id}`
+    }
+    @Get(':id/:size')
+    findByIDSize(@Param() parametros:any):string{
+        return `Obteniendo productos del tipo ${parametros.id} y tamaño ${parametros.size}`
     }
     @Post()
     insertaProducts():string{
@@ -16,10 +32,12 @@ export class ProductsController {
     }
     @Put()
     actualizaProducts():string{
-            return "Producto actualizado"
+        return "Producto ACTUALIZADO"
     }
+
     @Delete()
-    borrarProducts():string{
+    borraProducts():string{
         return "Producto Borrado"
     }
+
 }
