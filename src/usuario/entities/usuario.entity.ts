@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 @Entity()
-export class Alumno {
+export class Usuario {
     @PrimaryGeneratedColumn() // Genera un id autoincremental
     id: number;
     @Column({ type: 'varchar', length: 50 })
