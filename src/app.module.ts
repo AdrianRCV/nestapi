@@ -1,16 +1,15 @@
 import { Module} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { ProductsController } from './products/products.controller';
-import { ProductsService } from './products/products.service';
-import { ProductsModule } from './products/products.module';
-import { ClientesModule } from './clientes/clientes.module';
-import { AlumnosModule } from './alumnos/alumnos.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioModule } from './usuario/usuario.module';
+import { BibliotecaModule } from './biblioteca/biblioteca.module';
+import { AlumnoModule } from './alumno/alumno.modulle';
+
 
 @Module({
-  imports: [ConfigModule.forRoot({isGlobal:true,}), ProductsModule, ClientesModule, AlumnosModule,
+  imports: [ConfigModule.forRoot({isGlobal:true,}),
     TypeOrmModule.forRoot({
+      name:'base1',
       type:'mysql',
       host:process.env.URL,
       port:3306,
@@ -21,16 +20,19 @@ import { UsuarioModule } from './usuario/usuario.module';
       synchronize:true
     }),
     TypeOrmModule.forRoot({
+      name:'base2',
       type:'mysql',
       host:process.env.URL,
       port:3306,
       username: 'root',
       password:process.env.PASSWORD,
-      database: 'apinest2',
+      database: process.env.DBNAME2,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize:true
     }),
-    UsuarioModule
+    UsuarioModule,
+    AlumnoModule,
+    BibliotecaModule
   ],
   controllers: [],
   providers: [],
