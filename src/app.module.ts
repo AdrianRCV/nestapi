@@ -3,7 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioModule } from './usuario/usuario.module';
 import { BibliotecaModule } from './biblioteca/biblioteca.module';
-import { AlumnoModule } from './alumno/alumno.modulle';
+import { AlumnoModule } from './alumno/alumno.module';
 import { PokemonesModule } from './pokemones/pokemones.module';
 import { PeliculasModule } from './peliculas/peliculas.module';
 
