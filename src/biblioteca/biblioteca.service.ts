@@ -25,12 +25,12 @@ export class BibliotecaService {
     return this.bibliotecaRepository.findOne({where:{id}});
   }
 
-  async update(id: number, updateBibliotecaDto: UpdateBibliotecaDto):Promise<Biblioteca> {
-    const libro=await this.findOne(id);
-    this.bibliotecaRepository.merge(libro,updateBibliotecaDto);
-    this.bibliotecaRepository.save(libro);
-    return `El libro id=#${id} ha sido modificado`;
-  }
+  async update(id: number, updateBibliotecaDto: UpdateBibliotecaDto): Promise<Biblioteca> {
+    const libro = await this.findOne(id);
+    this.bibliotecaRepository.merge(libro, updateBibliotecaDto);
+    await this.bibliotecaRepository.save(libro);
+    return libro;
+  }  
 
   async remove(id: number):Promise<string> {
     const libro= await this.findOne(id);
