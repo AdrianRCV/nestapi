@@ -4,6 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioModule } from './usuario/usuario.module';
 import { BibliotecaModule } from './biblioteca/biblioteca.module';
 import { AlumnoModule } from './alumno/alumno.modulle';
+import { AutorModule } from './_biblioteca/autor/autor.module';
+import { LibroModule } from './_biblioteca/libro/libro.module';
+import { ApiModule } from './api/api.module';
 
 
 @Module({
@@ -32,7 +35,10 @@ import { AlumnoModule } from './alumno/alumno.modulle';
     }),
     UsuarioModule,
     AlumnoModule,
-    BibliotecaModule
+    BibliotecaModule,
+    AutorModule,
+    LibroModule,
+    ApiModule
   ],
   controllers: [],
   providers: [],
