@@ -3,7 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioModule } from './usuario/usuario.module';
 import { BibliotecaModule } from './biblioteca/biblioteca.module';
-import { AlumnoModule } from './alumno/alumno.modulle';
 import { AutorModule } from './_biblioteca/autor/autor.module';
 import { LibroModule } from './_biblioteca/libro/libro.module';
 import { ApiModule } from './api/api.module';
@@ -20,6 +19,13 @@ import { CategoriaModule } from './_recambios/categoria/categoria.module';
 import { PiezaModule } from './_recambios/pieza/pieza.module';
 import { ProveedorModule } from './_recambios/proveedor/proveedor.module';
 import { SuministraModule } from './_recambios/suministra/suministra.module';
+import { PracticaModule } from './evaluacion/practica/practica.module';
+import { AlumnoModule } from './evaluacion/alumno/alumno.module';
+import { ProfesorModule } from './evaluacion/profesor/profesor.module';
+import { ExamenTeoricoModule } from './evaluacion/examen_teorico/examen_teorico.module';
+import { AlumnopracticaModule } from './evaluacion/alumnopractica/alumnopractica.module';
+import { AlumnoexamenModule } from './evaluacion/alumnoexamen/alumnoexamen.module';
+import { ProfesorpracticaModule } from './evaluacion/profesorpractica/profesorpractica.module';
 
 
 @Module({
@@ -64,7 +70,13 @@ import { SuministraModule } from './_recambios/suministra/suministra.module';
     CategoriaModule,
     PiezaModule,
     ProveedorModule,
-    SuministraModule
+    SuministraModule,
+    PracticaModule,
+    ProfesorModule,
+    ExamenTeoricoModule,
+    AlumnopracticaModule,
+    AlumnoexamenModule,
+    ProfesorpracticaModule
   ],
   controllers: [],
   providers: [],
