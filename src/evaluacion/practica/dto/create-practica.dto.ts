@@ -1,1 +1,4 @@
-export class CreatePracticaDto {}
+export class CreatePracticaDto {
+    titulo: string;
+    dificultad: string;
+}

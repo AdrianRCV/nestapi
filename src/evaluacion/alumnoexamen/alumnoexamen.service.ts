@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAlumnoexamanDto } from './dto/create-alumnoexaman.dto';
 import { UpdateAlumnoexamanDto } from './dto/update-alumnoexaman.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Alumnoexamen } from './entities/alumnoexamen.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AlumnoexamenService {
-  create(createAlumnoexamanDto: CreateAlumnoexamanDto) {
-    return 'This action adds a new alumnoexaman';
+  constructor(
+    @InjectRepository(Alumnoexamen,'base1')
+    private alumnoexamenRepository: Repository<Alumnoexamen>,
+  ){}
+  async create(createAlumnoexamanDto: CreateAlumnoexamanDto):Promise<Alumnoexamen> {
+    const alumnoexaman = this.alumnoexamenRepository.create(createAlumnoexamanDto);
+    return this.alumnoexamenRepository.save(alumnoexaman);
   }
 
-  findAll() {
-    return `This action returns all alumnoexamen`;
+  async findAll():Promise<Alumnoexamen[]> {
+    return this.alumnoexamenRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} alumnoexaman`;
+  async findOne(id: number):Promise<Alumnoexamen> {
+    return this.alumnoexamenRepository.findOne({where:{id_alumno:id}});
   }
 
-  update(id: number, updateAlumnoexamanDto: UpdateAlumnoexamanDto) {
-    return `This action updates a #${id} alumnoexaman`;
+  async update(id: number, updateAlumnoexamanDto: UpdateAlumnoexamanDto):Promise<string> {
+    const alumnoexaman =await this.findOne(id);
+    this.alumnoexamenRepository.merge(alumnoexaman,updateAlumnoexamanDto);
+    this.alumnoexamenRepository.save(alumnoexaman);
+    return `La nota del alumno #${id} ha sido actualizada`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} alumnoexaman`;
+  async remove(id: number):Promise<string> {
+    const alumnoexaman = await this.findOne(id);
+    this.alumnoexamenRepository.remove(alumnoexaman);
+    return `La nota del alumno #${id} has sido eliminada`;
   }
 }

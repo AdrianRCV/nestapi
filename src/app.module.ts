@@ -9,7 +9,6 @@ import { AlumnopracticaModule } from './evaluacion/alumnopractica/alumnopractica
 import { AlumnoexamenModule } from './evaluacion/alumnoexamen/alumnoexamen.module';
 import { ProfesorpracticaModule } from './evaluacion/profesorpractica/profesorpractica.module';
 
-
 @Module({
   imports: [ConfigModule.forRoot({isGlobal:true,}),
     TypeOrmModule.forRoot({
