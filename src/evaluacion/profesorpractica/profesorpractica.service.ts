@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProfesorpracticaDto } from './dto/create-profesorpractica.dto';
 import { UpdateProfesorpracticaDto } from './dto/update-profesorpractica.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Profesorpractica } from './entities/profesorpractica.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ProfesorpracticaService {
-  create(createProfesorpracticaDto: CreateProfesorpracticaDto) {
-    return 'This action adds a new profesorpractica';
+  constructor(
+    @InjectRepository(Profesorpractica,'base1')
+    private profesorpracticaRepository: Repository<Profesorpractica>,
+  ) {}
+  async create(createProfesorpracticaDto: CreateProfesorpracticaDto):Promise<Profesorpractica> {
+    const profesorpractica = this.profesorpracticaRepository.create(createProfesorpracticaDto);
+    return this.profesorpracticaRepository.save(profesorpractica);
   }
 
-  findAll() {
-    return `This action returns all profesorpractica`;
+  async findAll():Promise<Profesorpractica[]> {
+    return this.profesorpracticaRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} profesorpractica`;
+  async findOne(id: number):Promise<Profesorpractica> {
+    return this.profesorpracticaRepository.findOne({where:{id_profesor:id}});
   }
 
-  update(id: number, updateProfesorpracticaDto: UpdateProfesorpracticaDto) {
-    return `This action updates a #${id} profesorpractica`;
+  async update(id: number, updateProfesorpracticaDto: UpdateProfesorpracticaDto):Promise<string> {
+    const profesorpractica =await this.findOne(id);
+    this.profesorpracticaRepository.merge(profesorpractica,updateProfesorpracticaDto);
+    this.profesorpracticaRepository.save(profesorpractica);
+    return `La fecha de la practica #${id} ha sido modificada`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} profesorpractica`;
+  async remove(id: number):Promise<string> {
+    const profesorpractica = await this.findOne(id);
+    this.profesorpracticaRepository.remove(profesorpractica);
+    return `La fecha de la practica #${id} ha sido eliminada`;
   }
 }

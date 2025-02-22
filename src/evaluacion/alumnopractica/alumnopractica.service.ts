@@ -1,26 +1,38 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAlumnopracticaDto } from './dto/create-alumnopractica.dto';
 import { UpdateAlumnopracticaDto } from './dto/update-alumnopractica.dto';
-
+import { InjectRepository } from '@nestjs/typeorm';
+import { AlumnoRealizaPractica } from './entities/alumnopractica.entity';
+import { Repository } from 'typeorm';
 @Injectable()
 export class AlumnopracticaService {
-  create(createAlumnopracticaDto: CreateAlumnopracticaDto) {
-    return 'This action adds a new alumnopractica';
+  constructor(
+    @InjectRepository(AlumnoRealizaPractica,'base1')
+    private alumnopracticaRepository: Repository<AlumnoRealizaPractica>,
+  ){}
+  async create(createAlumnopracticaDto: CreateAlumnopracticaDto) {
+    const alumnopractica = this.alumnopracticaRepository.create(createAlumnopracticaDto);
+    return this.alumnopracticaRepository.save(alumnopractica);
   }
 
-  findAll() {
-    return `This action returns all alumnopractica`;
+  async findAll():Promise<AlumnoRealizaPractica[]> {
+    return this.alumnopracticaRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} alumnopractica`;
+  async findOne(id: number):Promise<AlumnoRealizaPractica> {
+    return this.alumnopracticaRepository.findOne({where:{id_alumno:id}});
   }
 
-  update(id: number, updateAlumnopracticaDto: UpdateAlumnopracticaDto) {
-    return `This action updates a #${id} alumnopractica`;
+  async update(id: number, updateAlumnopracticaDto: UpdateAlumnopracticaDto):Promise<string> {
+    const alumnopractica =await this.findOne(id);
+    this.alumnopracticaRepository.merge(alumnopractica,updateAlumnopracticaDto);
+    this.alumnopracticaRepository.save(alumnopractica); 
+    return `La nota del alumno #${id} ha sido actualizada`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} alumnopractica`;
+  async remove(id: number):Promise<string> {
+    const alumnopractica = await this.findOne(id);
+    this.alumnopracticaRepository.remove(alumnopractica);
+    return `La nota del alumno #${id} has sido eliminada`;
   }
 }

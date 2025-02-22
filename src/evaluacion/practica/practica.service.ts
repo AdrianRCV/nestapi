@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePracticaDto } from './dto/create-practica.dto';
 import { UpdatePracticaDto } from './dto/update-practica.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Practica } from './entities/practica.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PracticaService {
-  create(createPracticaDto: CreatePracticaDto) {
-    return 'This action adds a new practica';
+  constructor(
+    @InjectRepository(Practica,'base1')
+    private practicaRepository: Repository<Practica>,
+  ) {}  
+  async create(createPracticaDto: CreatePracticaDto):Promise<Practica> {
+    const practica = this.practicaRepository.create(createPracticaDto);
+    return this.practicaRepository.save(practica);
   }
 
-  findAll() {
-    return `This action returns all practica`;
+  async findAll():Promise<Practica[]> {
+    return this.practicaRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} practica`;
+  async findOne(id: number):Promise<Practica> {
+    return this.practicaRepository.findOne({where:{id}});
   }
 
-  update(id: number, updatePracticaDto: UpdatePracticaDto) {
-    return `This action updates a #${id} practica`;
+  async update(id: number, updatePracticaDto: UpdatePracticaDto):Promise<any> {
+    const practica =await this.findOne(id);
+    this.practicaRepository.merge(practica,updatePracticaDto);
+    this.practicaRepository.save(practica);
+    return `La practica #${id} ha sido modificada`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} practica`;
+  async remove(id: number):Promise<string> {
+    const practica = await this.findOne(id);
+    this.practicaRepository.remove(practica);
+    return `La practica #${id} ha sido eliminada`;
   }
 }
