@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
-import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from './entities/usuario.entity';
 import { Repository } from 'typeorm';
@@ -8,11 +7,13 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class UsuarioService {
   constructor(//Conexión con la base de datos
-    @InjectRepository(Usuario,'base2')
+    @InjectRepository(Usuario,'base1')
     private usuarioRepository:Repository<Usuario>
   ){}
-  async create(createUsuarioDto: CreateUsuarioDto):Promise<Usuario> {
-    const usuario=this.usuarioRepository.create(createUsuarioDto);
+
+  async createUser(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
+    const { nombre, email, password } = createUsuarioDto; 
+    const usuario = this.usuarioRepository.create({ nombre, email, password });
     return this.usuarioRepository.save(usuario);
   }
 

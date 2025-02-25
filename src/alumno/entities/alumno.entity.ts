@@ -5,7 +5,7 @@ export class Alumno {
   id: number;
   @Column({ type: 'varchar', length: 50 })
     nombre: string;
-  @Column({ unique: true })
+  @Column()
     email: string;
   @Column()
     password: string;

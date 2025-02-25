@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Put, NotFoundException } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
-import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { Usuario } from './entities/usuario.entity';
 
 @Controller('usuario')
@@ -10,7 +9,7 @@ export class UsuarioController {
 
   @Post()
   async create(@Body() createUsuarioDto: CreateUsuarioDto):Promise<Usuario> {
-    return this.usuarioService.create(createUsuarioDto);
+    return this.usuarioService.createUser(createUsuarioDto);
   }
 
   @Get()
